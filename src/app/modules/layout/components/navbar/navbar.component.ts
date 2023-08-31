@@ -6,6 +6,7 @@ import {
   faClose,
   faAngleDown
 } from '@fortawesome/free-solid-svg-icons';
+import { User } from '@models/user.model';
 import {AuthService} from '@services/auth.service';
 @Component({
   selector: 'app-navbar',
@@ -19,6 +20,7 @@ export class NavbarComponent {
 
   isOpenOverlayAvatar = false;
   isOpenOverlayBoards = false;
+  user$=this.authService.user$;
 
   constructor(
     private authService:AuthService,

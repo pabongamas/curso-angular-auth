@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
     private router:Router
   ){}
 
-  canActivate():boolean{
+  canActivate():boolean{  
    const token=this.tokenService.getToken();
     if(!token){
       this.router.navigate(['/login']);
