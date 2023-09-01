@@ -1,4 +1,4 @@
-<ng-container *ngIf="user$|async as user">
+<ng-container *ngIf="user$ | async as user">
   <nav class="bg-sky-700 border-gray-200 px-6 shadow-md">
     <div class="flex flex-wrap justify-between items-center">
       <div class="flex items-center">
@@ -26,7 +26,9 @@
               </app-btn>
             </li>
             <li>
-              <a routerLink="/app/users" class="block py-3 px-4 text-white">Users</a>
+              <a routerLink="/app/users" class="block py-3 px-4 text-white"
+                >Users</a
+              >
             </li>
             <li>
               <app-btn typeBtn="button" color="sky">Create</app-btn>
@@ -61,7 +63,7 @@
       </div>
     </div>
   </nav>
-  
+
   <ng-template
     cdkConnectedOverlay
     [cdkConnectedOverlayOrigin]="menuOverlay"
@@ -81,14 +83,10 @@
         </button>
       </div>
       <div class="py-3 px-4 flex items-center space-x-4">
-        <img
-          class="w-10 h-10 rounded-full"
-          src="user?.avatar"
-          alt=""
-        />
+        <img class="w-10 h-10 rounded-full" src="user?.avatar" alt="" />
         <div class="space-y-1">
-          <div>{{user?.name}}</div>
-          <div class="text-sm text-gray-500">{{user?.email}}</div>
+          <div>{{ user?.name }}</div>
+          <div class="text-sm text-gray-500">{{ user?.email }}</div>
         </div>
       </div>
       <ul class="py-1">
@@ -120,12 +118,25 @@
       </ul>
       <ul class="py-1">
         <li>
-          <button (click)="logout()" class="block py-2 px-4 text-sm text-gray-700">Log out</button>
+          <button
+            (click)="isValidToken()"
+            class="block py-2 px-4 text-sm text-gray-700"
+          >
+            isValidToken
+          </button>
+        </li>
+        <li>
+          <button
+            (click)="logout()"
+            class="block py-2 px-4 text-sm text-gray-700"
+          >
+            Log out
+          </button>
         </li>
       </ul>
     </div>
   </ng-template>
-  
+
   <ng-template
     cdkConnectedOverlay
     [cdkConnectedOverlayOrigin]="boardsOverlay"
@@ -147,5 +158,4 @@
       <div class="py-3 px-4 flex justify-between">Content</div>
     </div>
   </ng-template>
-  
 </ng-container>
