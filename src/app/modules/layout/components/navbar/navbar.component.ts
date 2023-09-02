@@ -35,6 +35,6 @@ export class NavbarComponent {
   }
 
   isValidToken(){
-    
+    console.log(this.tokenService.isValidToken());
   }
 }

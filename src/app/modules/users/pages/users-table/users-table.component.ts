@@ -12,10 +12,11 @@ import { User } from '@models/user.model';
 export class UsersTableComponent implements OnInit  {
 
   ngOnInit(): void {
-    this.usersService.getUsers()
-    .subscribe(users=>{
-      this.dataSource.init(users); 
-    })
+  this.getUsers();
+    // this.usersService.getUsers()
+    // .subscribe(users=>{
+    //   this.dataSource.init(users);
+    // })
     this.authService.user$
     .subscribe(user=>{
       this.user=user;
@@ -27,6 +28,12 @@ export class UsersTableComponent implements OnInit  {
 
   constructor(private usersService:UsersService,
     private authService:AuthService) {
+  }
+  getUsers(){
+    this.usersService.getUsers()
+    .subscribe(users=>{
+      this.dataSource.init(users);
+    })
   }
 
 }
