@@ -11,7 +11,6 @@ import { Observable, switchMap } from 'rxjs';
 import { TokenService } from '@services/token.service';
 import { AuthService } from '@services/auth.service';
 
-
 const CHECK_TOKEN = new HttpContextToken<boolean>(() => false);
 
 export function checkToken() {
@@ -20,8 +19,10 @@ export function checkToken() {
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(private tokenService: TokenService,
-    private authService:AuthService) {}
+  constructor(
+    private tokenService: TokenService,
+    private authService: AuthService
+  ) {}
 
   intercept(
     request: HttpRequest<unknown>,
@@ -29,11 +30,11 @@ export class TokenInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     if (request.context.get(CHECK_TOKEN)) {
       // return this.addToken(request, next);
-      const isValidToken=this.tokenService.isValidToken();//acces token
-      if(isValidToken){
-        return this.addToken(request,next);
-      }else{
-        return this.updateAccessTokenAndRefreshToken(request,next);
+      const isValidToken = this.tokenService.isValidToken(); //acces token
+      if (isValidToken) {
+        return this.addToken(request, next);
+      } else {
+        return this.updateAccessTokenAndRefreshToken(request, next);
       }
     }
     return next.handle(request);
@@ -49,14 +50,16 @@ export class TokenInterceptor implements HttpInterceptor {
       return next.handle(request);
     }
   }
-  private updateAccessTokenAndRefreshToken(request: HttpRequest<unknown>, next: HttpHandler){
-    const refreshToken=this.tokenService.getRefreshToken();
-    const isValidRefreshToken=this.tokenService.isValidRefreshToken();
-    if(refreshToken && isValidRefreshToken){
-      return this.authService.refreshToken(refreshToken)
-      .pipe(
-        switchMap(()=>this.addToken(request,next))
-      )
+  private updateAccessTokenAndRefreshToken(
+    request: HttpRequest<unknown>,
+    next: HttpHandler
+  ) {
+    const refreshToken = this.tokenService.getRefreshToken();
+    const isValidRefreshToken = this.tokenService.isValidRefreshToken();
+    if (refreshToken && isValidRefreshToken) {
+      return this.authService
+        .refreshToken(refreshToken)
+        .pipe(switchMap(() => this.addToken(request, next)));
     }
     return next.handle(request);
   }
